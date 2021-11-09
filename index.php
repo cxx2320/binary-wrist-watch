@@ -44,16 +44,38 @@ function getMinute(int $minute)
 }
 
 
-for ($i = 0; $i < 12; $i++) {
-    $res = getHour($i);
-    $text = ['◇', '◇', '◇', '◇'];
-    for ($j = 0; $j < 4; $j++) {
-        if ($res[$j] != 0) {
-            $text[$j] = '◆';
+function genHour()
+{
+    for ($i = 0; $i < 13; $i++) {
+        $res = getHour($i);
+        $text = ['◇', '◇', '◇', '◇'];
+        for ($j = 0; $j < 4; $j++) {
+            if ($res[$j] != 0) {
+                $text[$j] = '◆';
+            }
         }
+        $image = Image::open('./tem.png');
+        $image
+            ->text(implode('', $text), './font/STSONG.TTF', 22, '#000000', Image::WATER_CENTER)
+            ->save('./hour/' . $i . '.png');
     }
-    $image = Image::open('./template.png');
-    $image
-        ->text(implode('', $text), './font/STSONG.TTF', 22, '#000000', Image::WATER_CENTER)
-        ->save('./hour/' . $i . '.png');
 }
+
+function genMinute()
+{
+    for ($i = 0; $i < 60; $i++) {
+        $res = getMinute($i);
+        $text = ['◇', '◇', '◇', '◇', '◇', '◇'];
+        for ($j = 0; $j < 6; $j++) {
+            if ($res[$j] != 0) {
+                $text[$j] = '◆';
+            }
+        }
+        $image = Image::open('./tem.png');
+        $image
+            ->text(implode('', $text), './font/STSONG.TTF', 22, '#000000', Image::WATER_CENTER)
+            ->save('./minute/' . $i . '.png');
+    }
+}
+genHour();
+genMinute();
